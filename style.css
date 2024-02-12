@@ -10,22 +10,19 @@
 }
 #playfield {
   background-color: lightgrey;
+  margin-left: 25%;
+  border: 6px solid darkslategray;
 }
-/* #start {
-  position: relative;
-  background-color: orange;
-  color: white;
-  align-self: center;
+#menu {
+  margin-top: 2vh;
+  display: flex;
+  justify-content: space-evenly;
+}
+button {
+  background-color: rgb(87, 117, 107);
+  color: whitesmoke;
   font-weight: bold;
   border: none;
-  padding: 8px 15px 8px 15px;
-  border-radius: 20px;
-  top: 20px;
-  margin-bottom: 20px;
-  left: 46%;
+  border-radius: 6px;
+  padding: 5px 3px 3px 5px;
 }
-#player {
-  width: 20px;
-  height: 20px;
-  background-color: red;
-} */

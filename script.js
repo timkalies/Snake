@@ -9,8 +9,12 @@ let tileSize,
   foodColor,
   foodX,
   foodY,
+  foodN,
   snakeDirection,
-  score;
+  score,
+  gameLoopInterval,
+  highscore,
+  displayScore;
 
 const Direction = {};
 //Variablen außerhalb deklariert für global scope
@@ -18,6 +22,9 @@ const Direction = {};
 /*********************************************************/
 
 document.addEventListener("DOMContentLoaded", function () {
+  highscore = 0;
+  displayScore = document.getElementById("highscore");
+  displayScore.innerHTML = "HIGHSCORE: " + highscore;
   /*********
    * GAME - Variablen
    *********/
@@ -94,9 +101,10 @@ function checkFoodCollision() {
 }
 
 function generateNewFood() {
+  foodN = getRandomNumber(1, 4);
   foodX = getRandomNumber(0, nrOfTilesInX - 1);
   foodY = getRandomNumber(0, nrOfTilesInY - 1);
-  //Generiert neuen, zufälligen Apfel
+  // Zeichnet den Apfel an einer zufälligen Position
 }
 /*********************************************************/
 
@@ -145,6 +153,17 @@ function getRandomNumber(start, end) {
 
 function gameOver() {
   //Beendet Loops bei Ausführung
+  drawText(
+    "Game over!",
+    "60px Arial black",
+    "black",
+    canvas.width / 2 - 200,
+    canvas.height / 2
+  );
+  if (score >= highscore) {
+    highscore = score;
+    displayScore.innerHTML = "Highscore: " + highscore;
+  }
   clearInterval(gameLoopInterval);
 }
 
@@ -179,4 +198,21 @@ function gameLoop() {
   drawText("Score: " + score, "20px Arial", "black", 10, canvas.height - 10);
 }
 // Called die Funktion und lädt sie alle 0.1sec neu
-let gameLoopInterval = setInterval(gameLoop, 100);
+
+function start() {
+  gameLoopInterval = setInterval(gameLoop, 100);
+}
+function restart() {
+  fillTile(canvas.width / 2 - 200, canvas.height / 2, "lightgrey");
+  clearCanvas();
+  //Bestimmt die X-Y Koordinate bei Bewegungsrichtung
+  score = 0;
+  snakeX = 2;
+  snakeY = 2; //Setzt Koords und Score auf Anfang
+  fillTile(snakeX, snakeY, snakeColor);
+  fillTile(foodX, foodY, foodColor);
+  drawText("Score: " + score, "20px Arial", "black", 10, canvas.height - 10);
+  // Vor dem Starten eines neuen Intervalls das vorherige löschen
+  clearInterval(gameLoopInterval);
+  gameLoopInterval = setInterval(gameLoop, 100);
+}
